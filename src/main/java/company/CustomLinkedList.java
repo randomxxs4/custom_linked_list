@@ -1,5 +1,6 @@
 package company;
 
+import java.util.Collection;
 import java.util.Iterator;
 
 public interface CustomLinkedList<T> {
@@ -7,9 +8,19 @@ public interface CustomLinkedList<T> {
 
     boolean add(T element);
 
+    boolean addAll(int index, Collection<T> collection);
+
+    boolean addAll(Collection<T> collection);
+
     boolean remove(T elem);
 
     boolean remove(int index);
+
+    int getSize();
+
+    void setLastNode(T element);
+
+    void setFirstNode(T element);
 
     void removeAll();
 

@@ -3,6 +3,9 @@ package company;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import static org.junit.Assert.*;
 
 public class CustomLinkedListImplTest {
@@ -12,9 +15,21 @@ public class CustomLinkedListImplTest {
         CustomLinkedListImpl<String> list = new CustomLinkedListImpl<>();
         assertTrue(list.add("sasha"));
         assertTrue(list.add("sasha2"));
+
         assertTrue(list.add(1, "dad3223"));
         assertTrue(list.add(2, "adadas"));
         assertFalse(list.add(34, "32123ada"));
+
+        List<String> strings = new ArrayList<>();
+        strings.add("sasas");
+        strings.add("12343r2");
+        strings.add("adad3");
+        strings.add("aaaaaaaaa");
+        strings.add("12ssssssss2");
+
+        assertTrue(list.addAll(1, strings));
+        assertTrue(list.addAll(strings));
+        assertFalse(list.addAll(list.getSize() + 1, strings));
     }
 
     @Test

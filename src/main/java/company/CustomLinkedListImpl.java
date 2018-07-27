@@ -1,5 +1,6 @@
 package company;
 
+import java.util.Collection;
 import java.util.Iterator;
 
 public class CustomLinkedListImpl<T> implements CustomLinkedList<T> {
@@ -30,6 +31,49 @@ public class CustomLinkedListImpl<T> implements CustomLinkedList<T> {
     public boolean add(T element) {
         setLastNode(element);
         return true;
+    }
+
+    public boolean addAll(int index, Collection<T> collection) {
+        if (index <= size && index >= 0) {
+            Object[] objects = collection.toArray();
+            if (objects.length == 0) {
+                return false;
+            }
+            Node<T> prevNode;
+            Node<T> currentNode;
+
+            if (index != size) {
+                currentNode = getNodeByIndex(index);
+                prevNode = currentNode.getPrevElement();
+            } else {
+                currentNode = null;
+                prevNode = last;
+            }
+
+            for (int i = 0; i < objects.length; i++) {
+                Node<T> node = new Node<>(prevNode, null, (T) objects[i]);
+                if (prevNode != null) {
+                    prevNode.setNextElement(node);
+                } else {
+                    first = node;
+                }
+                prevNode = node;
+            }
+
+            if (currentNode != null) {
+                prevNode.setNextElement(currentNode);
+                currentNode.setPrevElement(prevNode);
+            } else {
+                last = prevNode;
+            }
+            size += objects.length;
+            return true;
+        }
+        return false;
+    }
+
+    public boolean addAll(Collection<T> collection) {
+        return addAll(size, collection);
     }
 
     public boolean remove(int index) {
@@ -235,6 +279,10 @@ public class CustomLinkedListImpl<T> implements CustomLinkedList<T> {
         return null;
     }
 
+    public int getSize() {
+        return size;
+    }
+
     class LinkedListIterator implements Iterator<T> {
 
         private Node<T> currentNode;
@@ -256,7 +304,7 @@ public class CustomLinkedListImpl<T> implements CustomLinkedList<T> {
 
         @Override
         public T next() {
-            if (hasNext()){
+            if (hasNext()) {
                 currentNode = next;
                 next = next.getNextElement();
                 nextElementIndex++;
