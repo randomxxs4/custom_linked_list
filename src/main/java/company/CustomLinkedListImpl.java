@@ -242,7 +242,7 @@ public class CustomLinkedListImpl<T> implements CustomLinkedList<T> {
         private int nextElementIndex;
 
         public LinkedListIterator(int index) {
-            if (index != size && index >= 0) {
+            if (index < size && index >= 0) {
                 Node<T> nodeByIndex = getNodeByIndex(index);
                 next = nodeByIndex;
             }
