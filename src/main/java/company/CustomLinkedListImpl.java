@@ -1,5 +1,7 @@
 package company;
 
+import java.util.Iterator;
+
 public class CustomLinkedListImpl<T> implements CustomLinkedList<T> {
 
     private int size = 0;
@@ -89,6 +91,11 @@ public class CustomLinkedListImpl<T> implements CustomLinkedList<T> {
             return nodeByIndex.getValue();
         }
         return null;
+    }
+
+    @Override
+    public Iterator iterator(int index) {
+        return new LinkedListIterator(index);
     }
 
     public void setLastNode(T element) {
@@ -226,5 +233,36 @@ public class CustomLinkedListImpl<T> implements CustomLinkedList<T> {
             }
         }
         return null;
+    }
+
+    class LinkedListIterator implements Iterator<T> {
+
+        private Node<T> currentNode;
+        private Node<T> next;
+        private int nextElementIndex;
+
+        public LinkedListIterator(int index) {
+            if (index != size && index >= 0) {
+                Node<T> nodeByIndex = getNodeByIndex(index);
+                next = nodeByIndex;
+            }
+            nextElementIndex = index;
+        }
+
+        @Override
+        public boolean hasNext() {
+            return nextElementIndex < size;
+        }
+
+        @Override
+        public T next() {
+            if (hasNext()){
+                currentNode = next;
+                next = next.getNextElement();
+                nextElementIndex++;
+                return currentNode.getValue();
+            }
+            throw new RuntimeException("in iterator. method - next");
+        }
     }
 }

@@ -1,5 +1,7 @@
 package company;
 
+import java.util.Iterator;
+
 public interface CustomLinkedList<T> {
     boolean add(int index, T element);
 
@@ -24,4 +26,6 @@ public interface CustomLinkedList<T> {
     T getElement(int index);
 
     T getElement(T element);
+
+    Iterator iterator(int index);
 }
